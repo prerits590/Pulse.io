@@ -7,12 +7,30 @@
   flex-direction: column;
   gap: 10px;
   max-width: 350px;
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 20px;
   position: relative;
   /* background-color: #1a1a1a; */
   color: #fff;
   /* border: 1px solid #333; */
+}
+.navbar {
+  background: rgba(255, 255, 255, 0.05);
+  /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
+  backdrop-filter: blur(11.5px);
+  -webkit-backdrop-filter: blur(11.5px);
+}
+.hero-section {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(11.5px);
+  -webkit-backdrop-filter: blur(11.5px);
+}
+.form {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .title {
@@ -96,11 +114,6 @@
   transition: 0.3s ease;
 }
 
-.form label .input:placeholder-shown + span {
-  top: 12.5px;
-  font-size: 0.9em;
-}
-
 .form label .input:focus + span,
 .form label .input:valid + span {
   color: #00bfff;
@@ -112,7 +125,9 @@
 .input {
   font-size: medium;
 }
-
+.form::placeholder {
+  font-size: 0.5rem;
+}
 .submit {
   border: none;
   outline: none;
@@ -139,18 +154,41 @@
     opacity: 0;
   }
 }
-
-.rotating-svg-object {
-  transform: rotate(0deg);
-
-  animation: rotate 1s linear infinite;
+.float {
+  animation-name: ani-float;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.float-box {
+  /* border: solid red; */
+  width: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 2rem;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+@keyframes ani-float {
+  0% {
+    transform: translate(0, 0px);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: translate(0, 15px);
+  }
+  100% {
+    transform: translate(0, -0px);
   }
 }
+
+.gradient-text1 {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #009fff, #ec2f4b);
+}
+/* .gradient-text2 {
+  background-clip: text;
+  color: transparent;
+  background-image:linear-gradient(to right, #ff512f, #dd2476);
+} */
