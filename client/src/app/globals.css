@@ -13,24 +13,35 @@
   /* background-color: #1a1a1a; */
   color: #fff;
   /* border: 1px solid #333; */
+  z-index: 999;
 }
 .navbar {
   background: rgba(255, 255, 255, 0.05);
   /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
   backdrop-filter: blur(11.5px);
   -webkit-backdrop-filter: blur(11.5px);
+  position: fixed;
+  z-index: 999;
 }
 .hero-section {
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(11.5px);
   -webkit-backdrop-filter: blur(11.5px);
+  height: 100vh;
+  overflow-y: hidden;
+  z-index: 9;
 }
 .form {
   background: rgba(255, 255, 255, 0.25);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 9999;
+  overflow: hidden;
+}
+.form label, .form .btn{
+  z-index: 999;
 }
 
 .title {
@@ -192,3 +203,97 @@
   color: transparent;
   background-image:linear-gradient(to right, #ff512f, #dd2476);
 } */
+
+.bg-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  animation: animateBg 50s linear infinite;
+  z-index: 9;
+}
+
+@keyframes animateBg {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+    0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 0.1);
+  animation: animate 3s linear infinite;
+  z-index: 9;
+}
+
+.star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 1px;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(315deg) translateX(-1000px);
+    opacity: 0;
+  }
+}
+
+.star:nth-child(1) {
+  top: 0;
+  right: 0;
+  left: initial;
+  animation-delay: 0s;
+  animation-duration: 1s;
+}
+
+.star:nth-child(2) {
+  top: 0;
+  right: 100px;
+  left: initial;
+  animation-delay: 0.2s;
+  animation-duration: 3s;
+}
+
+.star:nth-child(3) {
+  top: 0;
+  right: 220px;
+  left: initial;
+  animation-delay: 2.75s;
+  animation-duration: 2.75s;
+}
+
+.star:nth-child(4) {
+  top: 0;
+  right: -220px;
+  left: initial;
+  animation-delay: 1.6s;
+  animation-duration: 1.6s;
+}

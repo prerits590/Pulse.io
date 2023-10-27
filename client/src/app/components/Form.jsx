@@ -5,9 +5,15 @@ export default function Form() {
   return (
     <div className="p-2 ">
       <form className="form p-6">
+      <section className="bg-stars ">
+          <span className="star"></span>
+          <span className="star"></span>
+          <span className="star"></span>
+          <span className="star"></span>
+        </section>
         <p className="title">Register </p>
-        <p className="message">Signup now and get full access to our app. </p>
-        <div className="flex">
+
+        <div className="flex ">
           <label>
             <input
               className="input"
@@ -27,7 +33,7 @@ export default function Form() {
           </label>
         </div>
 
-        <label>
+        <label >
           <input
             className="input"
             type="email"
@@ -53,10 +59,10 @@ export default function Form() {
           />
         </label>
         <button className="submit btn btn-primary">
-          <Link href="/Chat">Submit</Link>
+          <Link href="/client/src/app/chat/page.jsx">Submit</Link>
         </button>
         <p className="signin">
-          Already have an acount ? <Link href="/Chat">Signin</Link>{" "}
+          Already have an acount ? <Link href="/chat">Signin</Link>
         </p>
       </form>
     </div>
