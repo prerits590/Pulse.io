@@ -1,33 +1,25 @@
 import React from "react";
-import { BsCodeSlash } from "react-icons/bs";
+import Sidebar from "../components/Sidebar";
+import ChatsSection from "../components/ChatsSection";
+import ChatS from "../components/ChatS";
 
 export default function Page() {
   return (
     <>
-      <div className="grid md:grid-cols-11 grid-rows-5 gap-1">
-        <div className="col-span-1 border-2">
-          <div className="border-2 flex flex-col content-center items-center p-2 font-extrabold text-2xl ">
-            <div className="a border-2 p-2 my-3">
-              <BsCodeSlash />
-            </div>
-            <div className="b border-2 p-2 my-3">
-              <BsCodeSlash />
-            </div>
-            <div className="b  border-2 p-2 my-3">
-              <BsCodeSlash />
-            </div>
-            <div className="b border-2 p-2 my-3">
-              <BsCodeSlash />
-            </div>
-            <div className="b border-2 p-2 my-3">
-              <BsCodeSlash />
-            </div>
-          </div>
-          
+      <div className="grid md:grid-cols-11 grid-rows-5 gap-1 h-screen ">
+        <div className="col-span-1 glass-bg rounded-mdcd  flex justify-between flex-col h-screen">
+          <Sidebar />
         </div>
-        <div className="col-span-3 border-2">1</div>
-        <div className="col-span-4 border-2">1</div>{" "}
-        <div className="col-span-3 border-2">1</div>
+        <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
+          <ChatsSection />
+        </div>
+        <div className="col-span-6  glass-bg justify-between  rounded-md h-screen relative">
+          <ChatS />
+        </div>
+        <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
+          <ChatsSection />
+        </div>
+       
       </div>
     </>
   );

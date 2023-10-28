@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "20.8.9",
+    "@types/react": "18.2.33",
     "autoprefixer": "^10",
     "daisyui": "^3.9.2",
     "eslint": "^8",

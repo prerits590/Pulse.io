@@ -59,7 +59,7 @@ export default function Form() {
           />
         </label>
         <button className="submit btn btn-primary">
-          <Link href="/client/src/app/chat/page.jsx">Submit</Link>
+          <Link href="/chat">Submit</Link>
         </button>
         <p className="signin">
           Already have an acount ? <Link href="/chat">Signin</Link>
