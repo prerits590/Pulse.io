@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../libs/firebase.js";
+
 const initialState = {
   fullName: "",
   email: "",
@@ -19,21 +21,22 @@ export default function Form() {
       [name]: value,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-    console.log("Credential", credentials);
-    setCredentials(initialState);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
+      const user = userCredential.user;
+      console.log(user)
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("Credential", credentials);
+      setCredentials(initialState);
+    }
   };
 
   return (
@@ -56,7 +59,7 @@ export default function Form() {
               placeholder="Full Name"
               value={credentials.fullName}
               onChange={handleChange}
-              required
+              // required
             />
           </label>
 
@@ -81,7 +84,7 @@ export default function Form() {
             placeholder="Email"
             value={credentials.email}
             onChange={handleChange}
-            required
+            // required
           />
         </label>
 
@@ -93,7 +96,7 @@ export default function Form() {
             placeholder="Password"
             value={credentials.password}
             onChange={handleChange}
-            required
+            // required
           />
         </label>
         <label>
