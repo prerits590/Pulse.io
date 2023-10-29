@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../libs/firebase.js";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ref } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, storage } from "../../libs/firebase.js";
 
 const initialState = {
   fullName: "",
@@ -15,7 +17,17 @@ export default function Form() {
   const [credentials, setCredentials] = useState(initialState);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let name; 
+    let value; 
+    if(e.target.files){
+      name = e.target.name 
+      value = e.target.files[0].name
+    }else{
+      name = e.target.name
+      value = e.target.value
+
+    }
+    console.log(name,value)
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
@@ -29,8 +41,26 @@ export default function Form() {
         credentials.email,
         credentials.password
       );
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${credentials.fullName + date}`);
+
+      await uploadBytesResumable(storageRef, credentials.image).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(userCredential.user, {
+              fullName: credentials.fullName,
+              photoURL: downloadURL,
+            });
+            console.log("File available at", downloadURL);
+          } catch (error) {
+            c;
+            console.log(error);
+          }
+        });
+      });
+
       const user = userCredential.user;
-      console.log(user)
+      console.log(user);
     } catch (error) {
       console.error(error);
     } finally {
@@ -104,7 +134,7 @@ export default function Form() {
             className="input"
             type="file"
             name="image"
-            accept="image/*"
+            
             onChange={handleChange}
           />
         </label>
