@@ -1,44 +1,87 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+const initialState = {
+  fullName: "",
+  email: "",
+  password: "",
+  image: null,
+};
 
 export default function Form() {
+  const [credentials, setCredentials] = useState(initialState);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+    console.log("Credential", credentials);
+    setCredentials(initialState);
+  };
+
   return (
-    <div className="p-2 ">
-      <form className="form p-6">
-      <section className="bg-stars ">
+    <div className="p-2">
+      <form onSubmit={handleSubmit} className="form p-6">
+        <section className="bg-stars">
           <span className="star"></span>
           <span className="star"></span>
           <span className="star"></span>
           <span className="star"></span>
         </section>
-        <p className="title">Register </p>
+        <p className="title">Register</p>
 
-        <div className="flex ">
+        <div className="flex">
           <label>
             <input
               className="input"
               type="text"
-              placeholder="First Name"
-              required=""
+              name="fullName"
+              placeholder="Full Name"
+              value={credentials.fullName}
+              onChange={handleChange}
+              required
             />
           </label>
 
-          <label>
+          {/* <label>
             <input
               className="input"
               type="text"
+              name="lastName"
               placeholder="Last Name"
-              required=""
+              value={credentials.lastName}
+              onChange={handleChange}
+              required
             />
-          </label>
+          </label> */}
         </div>
 
-        <label >
+        <label>
           <input
             className="input"
             type="email"
+            name="email"
             placeholder="Email"
-            required=""
+            value={credentials.email}
+            onChange={handleChange}
+            required
           />
         </label>
 
@@ -46,23 +89,28 @@ export default function Form() {
           <input
             className="input"
             type="password"
+            name="password"
             placeholder="Password"
-            required=""
+            value={credentials.password}
+            onChange={handleChange}
+            required
           />
         </label>
         <label>
           <input
             className="input"
-            type="password"
-            placeholder="Confirm Password"
-            required=""
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
           />
         </label>
-        <button className="submit btn btn-primary">
-          <Link href="/chat">Submit</Link>
+        <button type="submit" className="submit btn btn-primary">
+          Submit
+          {/* <Link href="/chat">Submit</Link> */}
         </button>
         <p className="signin">
-          Already have an acount ? <Link href="/chat">Signin</Link>
+          Already have an account? <Link href="/chat">Sign in</Link>
         </p>
       </form>
     </div>

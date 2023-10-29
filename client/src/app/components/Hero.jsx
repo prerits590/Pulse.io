@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "./form";
+import Form from "./Form";
 import Image from "next/image";
 import ssshape from "../../../public/images/ssshape.svg";
 
