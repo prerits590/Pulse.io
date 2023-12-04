@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref } from "firebase/storage";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, storage } from "../../libs/firebase.js";
+import { auth, db, storage } from "../../libs/firebase.js";
+import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation.js";
 
 const initialState = {
@@ -14,76 +15,80 @@ const initialState = {
   image: null,
 };
 
-export default function Form() {
+export default function SignupForm() {
   const [credentials, setCredentials] = useState(initialState);
- const router = useRouter()
-  const handleChange = (e) => {
-    let name; 
-    let value; 
-    if(e.target.files){
-      name = e.target.name 
-      value = e.target.files[0].name
-    }else{
-      name = e.target.name
-      value = e.target.value
+  const router = useRouter();
 
+  const addUser = async (credentials) => {
+    const docRef = await addDoc(collection(db, "users"), {
+      name: credentials.fullName,
+      email: credentials.email,
+      image: credentials.image,
+      password: credentials.password,
+    });
+    console.log("docRef", docRef);
+  };
+
+  const handleChange = (e) => {
+    let name;
+    let value;
+    if (e.target.files) {
+      name = e.target.name;
+      value = e.target.files[0].name;
+    } else {
+      name = e.target.name;
+      value = e.target.value;
     }
-    console.log(name,value)
+    console.log(name, value);
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
     }));
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const userCredential = await createUserWithEmailAndPassword(
-  //       auth,
-  //       credentials.email,
-  //       credentials.password
-  //     );
-  //     const date = new Date().getTime();
-  //     const storageRef = ref(storage, `${credentials.fullName + date}`);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      );
 
-  //     await uploadBytesResumable(storageRef, credentials.image).then(() => {
-  //       getDownloadURL(storageRef).then(async (downloadURL) => {
-  //         try {
-  //           await updateProfile(userCredential.user, {
-  //             fullName: credentials.fullName,
-  //             photoURL: downloadURL,
-  //           });
-  //           console.log("File available at", downloadURL);
-  //         } catch (error) {
-  //           c;
-  //           console.log(error);
-  //         }
-  //       });
-  //     });
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${credentials.fullName + date}`);
 
-  //     const user = userCredential.user;
-  //     console.log(user);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     console.log("Credential", credentials);
-  //     setCredentials(initialState);
-  //   }
-  // };
+      await uploadBytesResumable(storageRef, credentials.image).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(userCredential.user, {
+              fullName: credentials.fullName,
+              photoURL: downloadURL,
+            });
+            console.log("File available at", downloadURL);
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      });
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-     
-    // Your code that uses useRouter
-    console.log("------>>>>>>")
-    router.push('/chat')
-  
-    
-    
-  }
+      const user = userCredential.user;
+
+      console.log(user, "from credssss");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("Credential", credentials);
+      addUser(credentials);
+
+      setCredentials(initialState);
+    }
+    console.log("------>>>>>>");
+    router.push("/chat");
+  };
 
   return (
     <div className="p-2">
-      <form onSubmit={handleSubmit} className="form p-6">
+      <form className="form p-6">
         <section className="bg-stars">
           <span className="star"></span>
           <span className="star"></span>
@@ -92,10 +97,10 @@ export default function Form() {
         </section>
         <p className="title">Register</p>
 
-        <div className="flex">
-          <label>
+        <div className="flex w-full">
+          <label className="w-full">
             <input
-              className="input"
+              className="input w-full"
               type="text"
               name="fullName"
               placeholder="Full Name"
@@ -118,7 +123,7 @@ export default function Form() {
           </label> */}
         </div>
 
-        <label>
+        <label className="w-full">
           <input
             className="input"
             type="email"
@@ -130,7 +135,7 @@ export default function Form() {
           />
         </label>
 
-        <label>
+        <label className="w-full">
           <input
             className="input"
             type="password"
@@ -141,16 +146,19 @@ export default function Form() {
             // required
           />
         </label>
-        <label>
+        <label className="w-full">
           <input
             className="input"
             type="file"
             name="image"
-            
             onChange={handleChange}
           />
         </label>
-        <button type="submit" className="submit btn btn-primary">
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="submit btn btn-primary"
+        >
           Submit
           {/* <Link href="/chat">Submit</Link> */}
         </button>

@@ -1,11 +1,12 @@
+"use client";
+import { useContext, useEffect } from "react";
 import Hero from "./components/Hero";
-import Navbar from "./components/Navbar";
-
+import { AuthContext, AuthContextProvider } from "../context/AuthContext";
 
 export default function Home() {
+ 
   return (
     <main className="">
-      <Navbar />
       <Hero />
     </main>
   );
