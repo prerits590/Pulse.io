@@ -7,6 +7,7 @@ import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../../libs/firebase.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation.js";
+import { useGlobalContext } from "../../Context/store.js";
 
 const initialState = {
   fullName: "",
@@ -17,6 +18,7 @@ const initialState = {
 
 export default function SignupForm() {
   const [credentials, setCredentials] = useState(initialState);
+  const { currentUser, setCurrentUser } = useGlobalContext();
   const router = useRouter();
 
   const addUser = async (credentials) => {
@@ -73,17 +75,23 @@ export default function SignupForm() {
 
       const user = userCredential.user;
 
-      console.log(user, "from credssss");
+      setCurrentUser(user);
+
+      console.log("from credssss", user);
     } catch (error) {
       console.error(error);
     } finally {
-      console.log("Credential", credentials);
+      // console.log("Credential", credentials);
       addUser(credentials);
-
       setCredentials(initialState);
+      console.log("------>>>>>>", currentUser);
     }
-    console.log("------>>>>>>");
-    router.push("/chat");
+
+    if(currentUser.Islogin ===true){
+      router.push("/chat")
+    }
+    // console.log("------>>>>>>", currentUser);
+    // router.push("/chat");
   };
 
   return (
