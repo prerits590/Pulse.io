@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref } from "firebase/storage";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, storage } from "../../libs/firebase.js";
+import { useRouter } from "next/navigation.js";
 
 const initialState = {
   fullName: "",
@@ -15,7 +16,7 @@ const initialState = {
 
 export default function Form() {
   const [credentials, setCredentials] = useState(initialState);
-
+ const router = useRouter()
   const handleChange = (e) => {
     let name; 
     let value; 
@@ -33,41 +34,52 @@ export default function Form() {
       [name]: value,
     }));
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        credentials.email,
-        credentials.password
-      );
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${credentials.fullName + date}`);
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(
+  //       auth,
+  //       credentials.email,
+  //       credentials.password
+  //     );
+  //     const date = new Date().getTime();
+  //     const storageRef = ref(storage, `${credentials.fullName + date}`);
 
-      await uploadBytesResumable(storageRef, credentials.image).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            await updateProfile(userCredential.user, {
-              fullName: credentials.fullName,
-              photoURL: downloadURL,
-            });
-            console.log("File available at", downloadURL);
-          } catch (error) {
-            c;
-            console.log(error);
-          }
-        });
-      });
+  //     await uploadBytesResumable(storageRef, credentials.image).then(() => {
+  //       getDownloadURL(storageRef).then(async (downloadURL) => {
+  //         try {
+  //           await updateProfile(userCredential.user, {
+  //             fullName: credentials.fullName,
+  //             photoURL: downloadURL,
+  //           });
+  //           console.log("File available at", downloadURL);
+  //         } catch (error) {
+  //           c;
+  //           console.log(error);
+  //         }
+  //       });
+  //     });
 
-      const user = userCredential.user;
-      console.log(user);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      console.log("Credential", credentials);
-      setCredentials(initialState);
-    }
-  };
+  //     const user = userCredential.user;
+  //     console.log(user);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     console.log("Credential", credentials);
+  //     setCredentials(initialState);
+  //   }
+  // };
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+     
+    // Your code that uses useRouter
+    console.log("------>>>>>>")
+    router.push('/chat')
+  
+    
+    
+  }
 
   return (
     <div className="p-2">
