@@ -1,13 +1,12 @@
-
-
+"use client";
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import ChatsSection from "../components/ChatsSection";
 import ChatS from "../components/ChatS";
 import { GlobalContext } from "../../Context/store";
+import withAuth from "./isAuth";
 
-export default function Page() {
- 
+const Page = () => {
   return (
     <>
       <div className="grid md:grid-cols-11 grid-rows-5 gap-1 h-screen ">
@@ -23,8 +22,9 @@ export default function Page() {
         <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
           <ChatsSection />
         </div>
-       
       </div>
     </>
   );
-}
+};
+
+export default withAuth(Page);

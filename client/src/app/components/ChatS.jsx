@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BiAlarm, BiUserCircle } from "react-icons/bi";
 import { IoIosNotifications } from "react-icons/io";
@@ -9,7 +10,12 @@ import Image from "next/image";
 import { IoCallOutline } from "react-icons/io5";
 import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
 import { BsCameraVideo } from "react-icons/bs";
+import { IoIosPower } from "react-icons/io";
+import { signOut } from "firebase/auth";
+import { auth } from "../../libs/firebase";
+
 export default function ChatS() {
+  
   return (
     <div>
       <div className="a rounded-lg flex p-1 items-center ">
@@ -39,19 +45,19 @@ export default function ChatS() {
           </a>
 
           <div className="flex justify-end text-2xl px-2">
-            <div className="e px-4 btn btn-ghost">
+            <a className="e px-4 btn btn-ghost">
               <BsCameraVideo />
-            </div>
-            <div className="e px-4 btn btn-ghost">
+            </a>
+            <a className="e px-4 btn btn-ghost">
               <IoCallOutline />
-            </div>
-            <div className="e px-4 btn btn-ghost">
+            </a>
+            <a className="e px-4 btn btn-ghost">
               <AiOutlineSearch />
-            </div>
-            <div className="divider divider-horizontal p-0 m-0"></div>
-            <div className="e px-4 btn btn-ghost">
-              <AiOutlineDown />
-            </div>
+            </a>
+            <a className="divider divider-horizontal p-0 m-0"></a>
+            <a onClick={() => signOut(auth)} className="px-4 btn btn-ghost">
+              <IoIosPower />
+            </a>
           </div>
         </div>
       </div>

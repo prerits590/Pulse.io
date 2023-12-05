@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import { BsChatDots, BsCodeSlash, BsFillGearFill } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import Budgie from "../../../public/images/Budgie.png";
@@ -7,8 +8,11 @@ import Image from "next/image";
 import { FiUsers, IconName } from "react-icons/fi";
 import { IoMdCall } from "react-icons/io";
 import Link from "next/link";
+import { GlobalContext } from "../../Context/store";
 
 export default function Sidebar() {
+  const { currentUser } = useContext(GlobalContext);
+
   return (
     <div className="h-screen flex justify-between flex-col">
       <div className=" flex flex-col content-center items-center p-2 font-extrabold text-xl">
@@ -58,13 +62,15 @@ export default function Sidebar() {
           <div className="avatar p-1 h-full w-full">
             <div className="w-full rounded-full ring ring-red-400 ring-offset-base-100 ring-offset-2">
               <Image
-                src={Ellipse1}
-                alt="bg-hover"
+                src={currentUser.photoURL}
+                alt="img"
                 blurDataURL="data:..."
                 automatically
                 provided
                 placeholder="blur"
                 className="" // Optional blur-up while loading
+                width={45}
+                height={45}
               />
             </div>
           </div>

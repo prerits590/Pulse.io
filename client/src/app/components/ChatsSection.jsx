@@ -1,7 +1,83 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import Chatitem from "../components/Chatitem";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "../../libs/firebase";
+import Image from "next/image";
+import { GlobalContext } from "../../Context/store";
 export default function ChatsSection() {
+  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [err, setErr] = useState(false);
+
+  const { currentUser } = useContext(GlobalContext);
+
+  const handleSearch = async () => {
+    const q = query(collection(db, "users"), where("name", "==", username));
+
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, "=>", doc.data());
+        setUser(doc.data());
+      });
+    } catch (err) {
+      setErr(true);
+      console.log(err);
+    }
+  };
+
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSearch();
+  };
+  const handleSelect = async () => {
+    // check if group exists or not, if not create new
+    const combinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+    console.log("user id", user.uid);
+    console.log("current uid", currentUser.uid);
+
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+
+      if (!res.exists()) {
+        // The document doesn't exist, so create a new one
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        // Create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            name: user.name,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            name: currentUser.name,
+            photoURL: currentUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (err) {
+      console.error("Error checking or creating chat document:", err);
+    }
+  };
   return (
     <div>
       <div className="c flex justify-between p-3 items-center ">
@@ -19,6 +95,8 @@ export default function ChatsSection() {
           type="text"
           placeholder="Search..."
           className="input input-bordered input-accent w-full max-w-xs"
+          onChange={(e) => setUsername(e.target.value)}
+          onKeyDown={handleKey}
         />
       </div>
       <div className="h">
@@ -27,7 +105,49 @@ export default function ChatsSection() {
         </div>
         <div className="h ">
           <div className="g">
-            <Chatitem />
+            {err && <span>User not found</span>}
+            {user && (
+              <div
+                className="a px-2 w-full"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSelect();
+                }}
+              >
+                <div className="a  ">
+                  <a
+                    href="/"
+                    className="btn btn-ghost w-full flex  normal-case p-2 rounded-lg border-2 h-full justify-between items-center"
+                  >
+                    <div className="b ">
+                      <Image
+                        src={user.photoURL}
+                        alt="bg-hover"
+                        blurDataURL="data:..."
+                        automatically
+                        provided
+                        placeholder="blur"
+                        className="a"
+                        width={45}
+                        height={45} // Optional blur-up while loading
+                      />
+                    </div>
+                    <div className="c justify-center items-center text-left ">
+                      <div className="d  text-xs truncate font-medium ">
+                        <p>{user.name}</p>
+                      </div>
+                      <div className="e   text-xs font-extralight">
+                        <p>Thanks!</p>
+                      </div>
+                    </div>
+                    <div className="f  text-xs font-light">
+                      <p>9:36pm</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            )}
+            <div className="divider m-0 py-0 px-6 h-0"></div>
           </div>
           <div className="g">
             <Chatitem />
