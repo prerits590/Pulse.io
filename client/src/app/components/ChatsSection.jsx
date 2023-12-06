@@ -23,7 +23,10 @@ export default function ChatsSection() {
   const { currentUser } = useContext(GlobalContext);
 
   const handleSearch = async () => {
-    const q = query(collection(db, "users"), where("name", "==", username));
+    const q = query(
+      collection(db, "users"),
+      where("displayName", "==", username)
+    );
 
     try {
       const querySnapshot = await getDocs(q);
@@ -59,7 +62,7 @@ export default function ChatsSection() {
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
-            name: user.name,
+            displayName: user.displayName,
             photoURL: user.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
@@ -68,7 +71,7 @@ export default function ChatsSection() {
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
-            name: currentUser.name,
+            displayName: currentUser.displayName,
             photoURL: currentUser.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
@@ -77,6 +80,8 @@ export default function ChatsSection() {
     } catch (err) {
       console.error("Error checking or creating chat document:", err);
     }
+    setUser(null);
+    setUsername("");
   };
   return (
     <div>
@@ -97,6 +102,7 @@ export default function ChatsSection() {
           className="input input-bordered input-accent w-full max-w-xs"
           onChange={(e) => setUsername(e.target.value)}
           onKeyDown={handleKey}
+          value={username}
         />
       </div>
       <div className="h">
@@ -124,17 +130,16 @@ export default function ChatsSection() {
                         src={user.photoURL}
                         alt="bg-hover"
                         blurDataURL="data:..."
-                        automatically
                         provided
                         placeholder="blur"
-                        className="a"
+                        className="rounded-3xl"
                         width={45}
                         height={45} // Optional blur-up while loading
                       />
                     </div>
                     <div className="c justify-center items-center text-left ">
                       <div className="d  text-xs truncate font-medium ">
-                        <p>{user.name}</p>
+                        <p>{user.displayName}</p>
                       </div>
                       <div className="e   text-xs font-extralight">
                         <p>Thanks!</p>
@@ -147,29 +152,6 @@ export default function ChatsSection() {
                 </div>
               </div>
             )}
-            <div className="divider m-0 py-0 px-6 h-0"></div>
-          </div>
-          <div className="g">
-            <Chatitem />
-          </div>
-        </div>
-      </div>
-      <div className="h">
-        <div className="f p-4 text-xs">
-          <h3>All Chats</h3>
-        </div>
-        <div className="h">
-          <div className="g">
-            <Chatitem />
-          </div>
-          <div className="g">
-            <Chatitem />
-          </div>
-          <div className="g">
-            <Chatitem />
-          </div>
-          <div className="g">
-            <Chatitem />
           </div>
         </div>
       </div>

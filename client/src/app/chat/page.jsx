@@ -5,6 +5,7 @@ import ChatsSection from "../components/ChatsSection";
 import ChatS from "../components/ChatS";
 import { GlobalContext } from "../../Context/store";
 import withAuth from "./isAuth";
+import PrevChats from "../components/PrevChats";
 
 const Page = () => {
   return (
@@ -14,14 +15,14 @@ const Page = () => {
           <Sidebar />
         </div>
         <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
-          <ChatsSection />
+          <PrevChats />
         </div>
         <div className="col-span-6  glass-bg justify-between  rounded-md h-screen relative">
           <ChatS />
         </div>
-        <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
+        {/* <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
           <ChatsSection />
-        </div>
+        </div> */}
       </div>
     </>
   );

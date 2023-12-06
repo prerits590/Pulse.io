@@ -42,29 +42,29 @@ export default function SignupForm() {
   // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = e.target[0].value;
+    const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      //Create a unique image name
+      //Create a unique image displayName
       const date = new Date().getTime();
-      const storageRef = ref(storage, `${name + date}`);
+      const storageRef = ref(storage, `${displayName + date}`);
 
       await uploadBytesResumable(storageRef, file).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             //Update profile
             await updateProfile(res.user, {
-              name,
+              displayName,
               photoURL: downloadURL,
             });
             //create user on firestore
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
-              name,
+              displayName,
               email,
               photoURL: downloadURL,
             });

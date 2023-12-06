@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { BiAlarm, BiUserCircle } from "react-icons/bi";
 import { IoIosNotifications } from "react-icons/io";
 import ChatBubbleL from "../components/ChatBubbleL";
@@ -13,9 +13,10 @@ import { BsCameraVideo } from "react-icons/bs";
 import { IoIosPower } from "react-icons/io";
 import { signOut } from "firebase/auth";
 import { auth } from "../../libs/firebase";
+import { GlobalContext } from "../../Context/store";
 
 export default function ChatS() {
-  
+  const { currentUser } = useContext(GlobalContext);
   return (
     <div>
       <div className="a rounded-lg flex p-1 items-center ">
@@ -35,7 +36,7 @@ export default function ChatS() {
               </div>
               <div className="text-xs px-4 text-left font-medium">
                 <div className="c">
-                  <p>Pink Panda</p>
+                  <p>{currentUser.displayName}</p>
                 </div>
                 <div className="d">
                   <p>Online</p>
