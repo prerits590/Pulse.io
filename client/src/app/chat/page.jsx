@@ -14,10 +14,10 @@ const Page = () => {
         <div className="col-span-1 glass-bg rounded-mdcd  flex justify-between flex-col h-screen">
           <Sidebar />
         </div>
-        <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">
+        <div className="col-span-3  glass-bg h-screen overflow-y-scroll rounded-md">
           <PrevChats />
         </div>
-        <div className="col-span-6  glass-bg justify-between  rounded-md h-screen relative">
+        <div className="col-span-7  glass-bg justify-between  rounded-md h-screen relative">
           <ChatS />
         </div>
         {/* <div className="col-span-2  glass-bg h-screen overflow-y-scroll rounded-md">

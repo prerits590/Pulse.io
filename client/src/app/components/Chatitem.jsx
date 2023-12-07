@@ -5,10 +5,17 @@ import Ellipse2 from "../../../public/images/Ellipse2.png";
 import { doc, onSnapshot } from "firebase/firestore";
 import { GlobalContext } from "../../Context/store";
 import { db } from "../../libs/firebase";
+import { ChatContext } from "../../Context/ChatContext";
 
 export default function Chatitem() {
   const { currentUser } = useContext(GlobalContext);
+  const { updateChatRoom } = useContext(ChatContext);
   const [chats, setChats] = useState([]);
+
+  const handleSelect = (u) => {
+    updateChatRoom(u); // Pass only the user information
+  };
+
   useEffect(() => {
     const getChats = () => {
       const userChatsRef = doc(db, "userChats", currentUser.uid);
@@ -42,39 +49,47 @@ export default function Chatitem() {
   return (
     <>
       <div className="a px-2 w-full">
-        {Object.entries(chats)?.map((chat) => (
-          <div className="a  " key={chat[0]}>
-            <a
-              href="/"
-              className="btn btn-ghost w-full flex  normal-case p-2 rounded-lg border-2 h-full justify-between items-center"
+        {Object.entries(chats)
+          ?.sort((a, b) => b[1].data - a[1].date)
+          .map((chat) => (
+            <div
+              className="a  "
+              key={chat[0]}
+              onClick={() => handleSelect(chat[1].userInfo)}
             >
-              <div className="b  rounded-full">
-                <Image
-                  src={chat[1].userInfo.photoURL}
-                  alt="bg-hover"
-                  blurDataURL="data:..."
-                  automatically
-                  provided
-                  placeholder="blur"
-                  className="rounded-full " // Optional blur-up while loading
-                  width={45}
-                  height={45}
-                />
-              </div>
-              <div className="c justify-center items-center text-left ">
-                <div className="d  text-xs truncate font-medium ">
-                  <p>{chat[1].userInfo.displayName}</p>
+              <a
+                href="#"
+                className="btn btn-ghost w-full flex  normal-case p-2  border-2 h-full justify-between items-center "
+              >
+                <div className=" h-full ">
+                  <div className="rounded-full overflow-hidden">
+                    <Image
+                      src={chat[1].userInfo.photoURL}
+                      alt="bg-hover"
+                      blurDataURL="data:..."
+                      automatically
+                      provided
+                      placeholder="blur"
+                      className="rounded-full object-cover" // Optional blur-up while loading
+                      width={45}
+                      height={45}
+                    />
+                  </div>
                 </div>
-                <div className="e   text-xs font-extralight">
-                  <p>{chat[1].userInfo.lastMessage?.text}</p>
+                <div className="c justify-center items-center text-left ">
+                  <div className="d  text-xs truncate font-medium ">
+                    <p>{chat[1].userInfo.displayName}</p>
+                  </div>
+                  <div className="e   text-xs font-extralight">
+                    <p>{chat[1].lastMessage?.text}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="f  text-xs font-light">
-                <p>9:36pm</p>
-              </div>
-            </a>
-          </div>
-        ))}
+                <div className="f  text-xs font-light">
+                  <p>9:36pm</p>
+                </div>
+              </a>
+            </div>
+          ))}
       </div>
     </>
   );

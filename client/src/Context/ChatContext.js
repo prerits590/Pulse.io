@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useReducer, useState } from "react";
-import { AuthContext } from "./AuthContext";
-
+import { GlobalContext } from "./store";
 export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(GlobalContext);
   const INITIAL_STATE = {
     chatId: "null",
     user: {},

@@ -123,7 +123,7 @@ export default function ChatsSection() {
                 <div className="a  ">
                   <a
                     href="/"
-                    className="btn btn-ghost w-full flex  normal-case p-2 rounded-lg border-2 h-full justify-between items-center"
+                    className="btn btn-ghost w-full flex  normal-case p-2  border-2 h-full justify-between items-center"
                   >
                     <div className="b ">
                       <Image
@@ -132,7 +132,7 @@ export default function ChatsSection() {
                         blurDataURL="data:..."
                         provided
                         placeholder="blur"
-                        className="rounded-3xl"
+                        className="rounded-full w-auto h-auto"
                         width={45}
                         height={45} // Optional blur-up while loading
                       />

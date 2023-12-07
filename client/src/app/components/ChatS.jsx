@@ -14,32 +14,36 @@ import { IoIosPower } from "react-icons/io";
 import { signOut } from "firebase/auth";
 import { auth } from "../../libs/firebase";
 import { GlobalContext } from "../../Context/store";
+import { ChatContext } from "../../Context/ChatContext";
+import Messages from "./Messages";
+
+import userPng from "../../../public/images/userPng.png";
 
 export default function ChatS() {
+  const { data } = useContext(ChatContext);
   const { currentUser } = useContext(GlobalContext);
   return (
     <div>
       <div className="a rounded-lg flex p-1 items-center ">
         <div className=" h-full flex justify-center items-center px-3">
           <a href="/" className="btn btn-ghost h-full normal-case ">
-            <div className="a flex items-center ">
-              <div className="b text-3xl h-full py-2">
+            <div className="a flex items-center py-2">
+              <div className="b text-3xl border-2 h-full rounded-full overflow-hidden">
                 <Image
-                  src={Ellipse2}
+                  src={data.user?.photoURL || userPng}
                   alt="bg-hover"
                   blurDataURL="data:..."
                   automatically
                   provided
                   placeholder="blur"
-                  className="a" // Optional blur-up while loading
+                  className="a "
+                  width={40}
+                  height={40} // Optional blur-up while loading
                 />
               </div>
-              <div className="text-xs px-4 text-left font-medium">
+              <div className="text-xs px-2 text-left font-medium">
                 <div className="c">
-                  <p>{currentUser.displayName}</p>
-                </div>
-                <div className="d">
-                  <p>Online</p>
+                  <h1>{data.user?.displayName || "User"}</h1>
                 </div>
               </div>
             </div>
@@ -62,39 +66,10 @@ export default function ChatS() {
           </div>
         </div>
       </div>
-      <div className="divider m-0 py-0 px-6 h-0"></div>
-
-      <div>
-        <div className="g p-4 max-h-screen overflow-y-scroll ">
-          <div className="a">
-            <ChatBubbleL />
-          </div>
-          <div className="a">
-            <ChatBubbleR />
-          </div>
-          <div className="a">
-            <ChatBubbleR />
-          </div>
-          <div className="a">
-            <ChatBubbleL />
-          </div>
-          <div className="a">
-            <ChatBubbleL />
-          </div>
-          <div className="a">
-            <ChatBubbleL />
-          </div>
-          <div className="a">
-            <ChatBubbleR />
-          </div>
-          <div className="a">
-            <ChatBubbleR />
-          </div>
-          <div className="a">
-            <ChatBubbleR />
-          </div>
-        </div>
+      <div className="divider m-0 py-0 px-6 h-0">
+        <Messages />
       </div>
+
       <div className="a bottom-0 ">
         <div className="a absolute bottom-0 p-2 w-full">
           <ChatBox />
