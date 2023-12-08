@@ -57,37 +57,37 @@ export default function Chatitem() {
               key={chat[0]}
               onClick={() => handleSelect(chat[1].userInfo)}
             >
-              <a
-                href="#"
-                className="btn btn-ghost w-full flex  normal-case p-2  border-2 h-full justify-between items-center "
-              >
-                <div className=" h-full ">
-                  <div className="rounded-full overflow-hidden">
+              <div className=" ">
+                <a
+                  href="#"
+                  className="btn btn-ghost w-full flex  normal-case p-2 h-full justify-between items-center "
+                >
+                  <div className=" h-full rounded-full py-2 overflow-hidden ">
                     <Image
                       src={chat[1].userInfo.photoURL}
-                      alt="bg-hover"
+                      alt="user"
                       blurDataURL="data:..."
                       automatically
                       provided
                       placeholder="blur"
-                      className="rounded-full object-cover" // Optional blur-up while loading
+                      className=" w-full h-full object-cover " // Optional blur-up while loading
                       width={45}
                       height={45}
                     />
                   </div>
-                </div>
-                <div className="c justify-center items-center text-left ">
-                  <div className="d  text-xs truncate font-medium ">
-                    <p>{chat[1].userInfo.displayName}</p>
+                  <div className="c justify-center items-center text-left ">
+                    <div className="d  text-xs truncate font-medium ">
+                      <p>{chat[1].userInfo.displayName}</p>
+                    </div>
+                    <div className="e   text-xs font-extralight">
+                      <p>{chat[1].lastMessage?.text}</p>
+                    </div>
                   </div>
-                  <div className="e   text-xs font-extralight">
-                    <p>{chat[1].lastMessage?.text}</p>
+                  <div className="f  text-xs font-light">
+                    <p>9:36pm</p>
                   </div>
-                </div>
-                <div className="f  text-xs font-light">
-                  <p>9:36pm</p>
-                </div>
-              </a>
+                </a>
+              </div>
             </div>
           ))}
       </div>

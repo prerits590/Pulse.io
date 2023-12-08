@@ -66,9 +66,9 @@ export default function ChatBox() {
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
-    setImg(null);
-    setText("");
   };
+  setImg(null);
+  setText("");
   return (
     <div className=" p-2 flex items-center justify-between w-full ">
       <div className="w-full">

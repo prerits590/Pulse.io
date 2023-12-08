@@ -58,21 +58,26 @@ export default function Sidebar() {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col p-4 justify-center items-center">
-        <div className="d border-2 h-full btn btn-ghost w-full ">
-          <div className="avatar p-1 h-full w-full">
-            <div className="w-full rounded-full ring ring-red-400 ring-offset-base-100 ring-offset-2">
-              <Image
-                src={currentUser?.photoURL || userPng}
-                alt="img"
-                blurDataURL="data:..."
-                automatically
-                provided
-                placeholder="blur"
-                className="" // Optional blur-up while loading
-                width={45}
-                height={45}
-              />
+      <div>
+        <div className="flex flex-col px-4 justify-center  items-center">
+          <div className="d h-full p-3 my-1 btn btn-ghost w-full ">
+            <div className="avatar px-1 h-full w-full">
+              <div className="w-full h-full my-1 rounded-full ring ring-red-400 ring-offset-base-100 ring-offset-2">
+                <Image
+                  src={currentUser?.photoURL || userPng}
+                  alt="img"
+                  blurDataURL="data:..."
+                  automatically
+                  provided
+                  placeholder="blur"
+                  className="w-full  object-cover" // Optional blur-up while loading
+                  width={45}
+                  height={45}
+                />
+              </div>
+            </div>
+            <div className=" w-full  flex justify-center">
+              <p>{currentUser.displayName || "User"}</p>
             </div>
           </div>
         </div>

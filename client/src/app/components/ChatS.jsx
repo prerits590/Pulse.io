@@ -66,7 +66,8 @@ export default function ChatS() {
           </div>
         </div>
       </div>
-      <div className="divider m-0 py-0 px-6 h-0">
+      <div className="divider m-0 py-0 px-6 h-0"></div>
+      <div>
         <Messages />
       </div>
 
