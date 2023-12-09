@@ -33,6 +33,7 @@ export default function loginForm() {
   };
 
   const handleChange = (e) => {
+
     let name;
     let value;
     if (e.target.files) {
@@ -73,8 +74,8 @@ export default function loginForm() {
           const user = userCredential.user;
           setLoggedIn(true);
           setMessage("Login Successful!");
-          console.log(user);
-          console.log("first------->>>>>>>>>", setLoggedIn);
+          // console.log(user);
+          // console.log("first------->>>>>>>>>", setLoggedIn);
           router.push("/chat");
           // ...
         })
@@ -89,7 +90,7 @@ export default function loginForm() {
     } finally {
       // console.log("Credential", credentials);
       setCredentials(initialState);
-      console.log("------>>>>>>", currentUser);
+      // console.log("------>>>>>>", currentUser);
     }
 
     // if (currentUser) {

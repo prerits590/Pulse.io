@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useContext, useReducer, useState } from "react";
 import { GlobalContext } from "./store";
 export const ChatContext = createContext();

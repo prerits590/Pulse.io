@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
 import Chatitem from "../components/Chatitem";
@@ -86,7 +87,7 @@ export default function ChatsSection() {
     } catch (err) {
       console.error("Error checking or creating chat document:", err);
     }
-    setUser(null);
+    // setUser(null);
     setUsername("");
   };
   return (

@@ -7,11 +7,11 @@ import Messages from "./Messages";
 
 export default function Message(message) {
   const { currentUser } = useContext(GlobalContext);
-  const { data } = useContext(ChatContext);
+  // const { data } = useContext(ChatContext);
   const ref = useRef();
-  // useEffect(() => {
-  //   ref.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [message]);
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
   console.log(message, "MESSAGE---->>>>");
   return (
     <div>
@@ -28,7 +28,7 @@ export default function Message(message) {
             alt=""
           />
         </div> */}
-        <div className="messageContent">
+        <div className="messageContent overflow-y-scroll">
           <div className="chat chat-end">
             <div className="chat-bubble-secondary p-2 rounded-2xl">
               {message.message.text && <p>{message.message.text}</p>}

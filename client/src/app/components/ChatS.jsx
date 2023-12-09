@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext } from "react";
 import { BiAlarm, BiUserCircle } from "react-icons/bi";
 import { IoIosNotifications } from "react-icons/io";

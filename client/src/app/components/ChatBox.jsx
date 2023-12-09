@@ -1,3 +1,4 @@
+"use client";
 import { React, useContext, useState } from "react";
 import { BiSolidSend } from "react-icons/bi";
 import { GlobalContext } from "../../Context/store";
@@ -54,6 +55,8 @@ export default function ChatBox() {
       });
     }
 
+    setImg(null);
+    setText("");
     await updateDoc(doc(db, "userChats", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
@@ -67,8 +70,6 @@ export default function ChatBox() {
       [data.chatId + ".date"]: serverTimestamp(),
     });
   };
-  setImg(null);
-  setText("");
   return (
     <div className=" p-2 flex items-center justify-between w-full ">
       <div className="w-full">

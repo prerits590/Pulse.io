@@ -1,4 +1,3 @@
-"use client";
 import { useContext } from "react";
 import { GlobalContext, GlobalContextProvider } from "../Context/store";
 
