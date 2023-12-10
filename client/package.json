@@ -14,12 +14,14 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "20.8.9",
     "@types/react": "18.2.33",
+    "@types/uuid": "^9.0.7",
     "autoprefixer": "^10",
     "daisyui": "^3.9.2",
     "eslint": "^8",
