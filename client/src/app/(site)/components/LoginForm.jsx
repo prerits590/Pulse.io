@@ -1,59 +1,101 @@
-// Update your loginForm component
-"use client"
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
+
+import { ref } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation.js";
-import { useGlobalContext } from "../../../Context/store";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useGlobalContext } from "../../../Context/store";
+import { auth, db } from "../../../libs/firebase";
 
 const initialState = {
+  fullName: "",
   email: "",
   password: "",
+  image: null,
 };
 
-export default function LoginForm() {
+export default function loginForm() {
   const [credentials, setCredentials] = useState(initialState);
-  const { setCurrentUser } = useGlobalContext();
+  const { currentUser, setCurrentUser } = useGlobalContext();
   const [message, setMessage] = useState("Error while logging in.");
   const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
 
+  const addUser = async (credentials) => {
+    const docRef = await addDoc(collection(db, "users"), {
+      email: credentials.email,
+      password: credentials.password,
+    });
+    console.log("docRef", docRef);
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let name;
+    let value;
+    if (e.target.files) {
+      name = e.target.name;
+      value = e.target.files[0].name;
+    } else {
+      name = e.target.name;
+      value = e.target.value;
+    }
+    console.log(name, value);
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
+      // const userCredential = await signInWithEmailAndPassword(
+      //   auth,
+      //   credentials.email,
+      //   credentials.password
+      // );
 
-      if (response.ok) {
-        const userData = await response.json();
-        setLoggedIn(true);
-        setMessage("Login Successful!");
-        setCurrentUser(userData.user); // Update your global context with the user data
-        router.push("/chat");
-      } else {
-        const errorData = await response.json();
-        console.error("Login error:", errorData.error);
-        setMessage("Error while logging in.");
-      }
+      // const user = userCredential.user;
+      // router.push("/chat");
+      // setCurrentUser(user);
+      // console.log(user);
+      // console.log("from credssss", user);
+
+      await signInWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          setLoggedIn(true);
+          setMessage("Login Successful!");
+          // console.log(user);
+          // console.log("first------->>>>>>>>>", setLoggedIn);
+          router.push("/dashboard");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          // ..
+        });
     } catch (error) {
-      console.error("Login error:", error.message);
-      setMessage("Error while logging in.");
+      console.error(error);
     } finally {
+      // console.log("Credential", credentials);
       setCredentials(initialState);
+      // console.log("------>>>>>>", currentUser);
     }
+
+    // if (currentUser) {
+    // }
+    // console.log("------>>>>>>", currentUser);
+    // router.push("/chat");
   };
 
   const alert = (message, loggedIn) => {
@@ -94,7 +136,7 @@ export default function LoginForm() {
         <div className="w-full">
           <label className="w-full">
             <input
-              className="input w-full mb-2"
+              className="input w-full mb-2 "
               type="email"
               name="email"
               placeholder="Email"
@@ -105,7 +147,7 @@ export default function LoginForm() {
 
           <label className="w-full">
             <input
-              className="input w-full mb-2"
+              className="input w-full mb-2 "
               type="password"
               name="password"
               placeholder="Password"

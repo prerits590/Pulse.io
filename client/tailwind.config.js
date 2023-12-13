@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
-    themes: ["cyberpunk", "dark", "synthwave", "dracula"],
+    themes: ["cyberpunk", "dark", "synthwave", "dracula", "forest", "night"],
     styled: true,
     base: true,
   },

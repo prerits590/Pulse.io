@@ -52,7 +52,7 @@ export default function RootPage() {
             <div className=" flex justify-center items-center col-span-8 md:col-span-3">
               {/* {showLogin ? <LoginForm /> : <SignupForm />} */}
               {/* <LoginForm /> */}
-              <SignupForm/>
+              <LoginForm />
             </div>
           </div>
         </div>

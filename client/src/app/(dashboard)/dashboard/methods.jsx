@@ -1,34 +1,19 @@
-"use client";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-import { useContext, useState } from "react";
-import { GlobalContext } from "../Context/store";
-import { ChatContext } from "../Context/ChatContext";
+// layoutFunctions.js
+import {
+  query,
+  collection,
+  where,
+  getDocs,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../../libs/firebase";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCg-2jNvi6UuQnpk_U1_zzyWDt8CB9gh-0",
-  authDomain: "chat-app-f7ea2.firebaseapp.com",
-  projectId: "chat-app-f7ea2",
-  storageBucket: "chat-app-f7ea2.appspot.com",
-  messagingSenderId: "999282587655",
-  appId: "1:999282587655:web:0c6d9d268aa7575a0fd2a2",
-  measurementId: "G-3DVH1ET58J",
-};
-
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth();
-export const storage = getStorage();
-export const db = getFirestore(app);
-// This file contains all the functions used in layout.js
-// const { currentUser } = useContext(GlobalContext);
-// const { data } = useContext(ChatContext);
-
-export const handleSearch = async (username) => {
-  const [err, setErr] = useState(false);
-  const [user, setUser] = useState(null);
+export const handleSearch = async (username, setUsername, setUser, setErr) => {
   const q = query(
     collection(db, "users"),
     where("displayName", "==", username)
@@ -46,14 +31,17 @@ export const handleSearch = async (username) => {
   }
 };
 
-export const handleKey = (e) => {
-  const [username, setUsername] = useState("");
-  e.code === "Enter" && handleSearch(username);
+export const handleKey = (e, handleSearch) => {
+  e.code === "Enter" && handleSearch();
 };
 
-export const handleSelectChat = async () => {
-  const [username, setUsername] = useState("");
-  // check if group exists or not, if not create new
+export const handleSelectChat = async (
+  currentUser,
+  user,
+  setUsername,
+  setUser,
+  db
+) => {
   const combinedId =
     currentUser.uid > user.uid
       ? currentUser.uid + user.uid
@@ -65,9 +53,8 @@ export const handleSelectChat = async () => {
     const res = await getDoc(doc(db, "chats", combinedId));
 
     if (!res.exists()) {
-      // The document doesn't exist, so create a new one
       await setDoc(doc(db, "chats", combinedId), { messages: [] });
-      // Create user chats
+
       const docCheck = await getDoc(doc(db, "userChats", currentUser.uid));
       if (!docCheck.exists()) {
         console.log("FALSE---->>>>>");
@@ -99,7 +86,27 @@ export const handleSelectChat = async () => {
   setUser(null);
   setUsername("");
 };
+// This file contains all the functions used in Chatitem.js
 
-export const handleSelect = (u) => {
+export const getChats = async (currentUser, setChats) => {
+  const userChatsRef = doc(db, "userChats", currentUser.uid);
+
+  onSnapshot(
+    userChatsRef,
+    (snapshot) => {
+      if (snapshot.exists()) {
+        const chatsData = snapshot.data();
+        setChats(chatsData);
+      } else {
+        console.error("Document does not exist for UID:", currentUser.uid);
+      }
+    },
+    (error) => {
+      console.error("Error fetching chats:", error);
+    }
+  );
+};
+
+export const handleSelect = (u, updateChatRoom) => {
   updateChatRoom(u);
 };
