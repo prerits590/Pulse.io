@@ -97,12 +97,14 @@ export default function loginForm() {
     // console.log("------>>>>>>", currentUser);
     // router.push("/chat");
   };
-
-  const alert = (message, loggedIn) => {
+  // console.log(setLoggedIn)
+  const alert = () => {
+    console.log(message);
+    console.log(loggedIn);
     return (
       <div
         role="alert"
-        className={`alert ${loggedIn ? "alert-success" : "alert-error"}`}
+        className={`alert ${loggedIn ? "alert-success" : "alert-error hidden"}`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -162,10 +164,9 @@ export default function loginForm() {
           className="submit btn btn-primary w-full"
         >
           Submit
-          {/* <Link href="/chat">Submit</Link> */}
         </button>
       </form>
-      {alert(message)}
+      <div className="alert-div px-2">{alert(message)}</div>
     </div>
   );
 }

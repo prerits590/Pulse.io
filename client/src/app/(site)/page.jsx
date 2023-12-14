@@ -41,7 +41,7 @@ export default function RootPage() {
               </h1>
               <h3>Lorem ipsum, dolor sit amet consectetur adipisicing.</h3> */}
                   <div className=" w-min h-min ">
-                    <h1 className="gradient-text2 m-2">Lorem</h1>
+                    <h className="gradient-text2  m-2">Lorem</h>
                   </div>
                   <div className=" w-min truncate h-min">
                     <h1 className="gradient-text1 m-2">Lorem ipsum dolor.</h1>
