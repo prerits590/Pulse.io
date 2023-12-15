@@ -7,18 +7,14 @@
   flex-direction: column;
   gap: 10px;
   max-width: 350px;
-  /* padding: 20px; */
   border-radius: 20px;
   position: relative;
-  /* background-color: #1a1a1a; */
   color: #fff;
-  /* border: 1px solid #333; */
   z-index: 999;
 }
 
 .navbar {
   background: rgba(255, 255, 255, 0.05);
-  /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
   backdrop-filter: blur(11.5px);
   -webkit-backdrop-filter: blur(11.5px);
   position: fixed;
@@ -37,7 +33,6 @@
 
 .glass-bg {
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4.5px);
   -webkit-backdrop-filter: blur(4.5px);
   border-radius: 10px;
@@ -190,7 +185,6 @@
 }
 
 .float-box {
-  /* border: solid red; */
   width: fit-content;
   position: absolute;
   top: 50%;
@@ -218,12 +212,6 @@
   color: transparent;
   background-image: linear-gradient(to right, #009fff, #ec2f4b);
 }
-
-/* .gradient-text2 {
-  background-clip: text;
-  color: transparent;
-  background-image:linear-gradient(to right, #ff512f, #dd2476);
-} */
 
 .bg-stars {
   position: absolute;
@@ -321,17 +309,12 @@
 }
 
 .text-input-div {
-  /* border: solid green; */
   position: relative;
 }
 
 .add-img-div {
-  /* border: solid red; */
   position: absolute;
   top: 0;
-
-
-
 }
 
 .glass-bg-2 {
@@ -348,3 +331,4 @@
   width: 100%;
   margin-top: 2rem;
 }
+

@@ -22,9 +22,6 @@ export default function ChatsSection() {
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
 
-  // const { currentUser } = useContext(GlobalContext);
-  // const { currentUser, } = useGlobalContext();
-
   const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
@@ -144,7 +141,7 @@ export default function ChatsSection() {
                         placeholder="blur"
                         className="rounded-full w-auto h-auto"
                         width={45}
-                        height={45} // Optional blur-up while loading
+                        height={45}
                       />
                     </div>
                     <div className="c justify-center items-center text-left ">

@@ -20,7 +20,7 @@ const initialState = {
 export default function loginForm() {
   const [credentials, setCredentials] = useState(initialState);
   const { currentUser, setCurrentUser } = useGlobalContext();
-  const [message, setMessage] = useState("Error while logging in.");
+  const [message, setMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
 
@@ -82,6 +82,7 @@ export default function loginForm() {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          setMessage(errorMessage);
           // ..
         });
     } catch (error) {
@@ -101,27 +102,30 @@ export default function loginForm() {
   const alert = () => {
     console.log(message);
     console.log(loggedIn);
-    return (
-      <div
-        role="alert"
-        className={`alert ${loggedIn ? "alert-success" : "alert-error hidden"}`}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="stroke-current shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
+    if (loggedIn == true || message) {
+      return (
+        <div
+          role="alert"
+          className={`alert ${loggedIn ? "alert-success" : "alert-error"}`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>{message}</span>
-      </div>
-    );
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{message}</span>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (

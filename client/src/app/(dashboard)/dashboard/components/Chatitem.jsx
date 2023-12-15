@@ -67,7 +67,7 @@ export default function Chatitem() {
                       automatically
                       provided
                       placeholder="blur"
-                      className=" w-full h-full object-cover " // Optional blur-up while loading
+                      className=" w-full h-full object-cover "
                       width={45}
                       height={45}
                     />

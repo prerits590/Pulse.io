@@ -28,16 +28,6 @@ export default function Message(message) {
           message.message.senderId == currentUser.uid && "owner"
         }`}
       >
-        {/* <div className="messageInfo">
-          <img
-            src={
-              message.senderId == currentUser.uid
-                ? currentUser.photoURL
-                : data.user.photoURL
-            }
-            alt=""
-          />
-        </div> */}
         {chatFlag ? (
           <div className="messageContent">
             <div className="chat chat-end">

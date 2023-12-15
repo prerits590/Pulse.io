@@ -33,7 +33,7 @@ export default function ChatS() {
                   placeholder="blur"
                   className="a "
                   width={40}
-                  height={40} // Optional blur-up while loading
+                  height={40}
                 />
               </div>
               <div className="text-xs px-2 text-left font-medium">

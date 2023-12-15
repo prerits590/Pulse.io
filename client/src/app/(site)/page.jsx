@@ -15,9 +15,6 @@ export default function RootPage() {
                 <span className="gradient-text1 font-extrabold">Pulse.io</span>
               </Link>
             </div>
-            {/* <button className="btn btn-outline" onClick={toggleForm}>
-                {showLogin ? "Signup" : "Login"}
-              </button> */}
           </div>
         </div>
         <div className="pt-8 w-screen h-screen overflow-hidden">
