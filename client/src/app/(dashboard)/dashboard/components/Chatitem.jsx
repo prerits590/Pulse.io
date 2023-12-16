@@ -2,11 +2,10 @@
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { BiUser } from "react-icons/bi";
-import Ellipse2 from "../../../public/images/Ellipse2.png";
 import { doc, onSnapshot } from "firebase/firestore";
-import { GlobalContext } from "../../Context/store";
-import { db } from "../../libs/firebase";
-import { ChatContext } from "../../Context/ChatContext";
+import { GlobalContext } from "../../../../Context/store";
+import { ChatContext } from "../../../../Context/ChatContext";
+import { db } from "../../../../libs/firebase";
 
 export default function Chatitem() {
   const { currentUser } = useContext(GlobalContext);
@@ -14,7 +13,7 @@ export default function Chatitem() {
   const [chats, setChats] = useState([]);
 
   const handleSelect = (u) => {
-    updateChatRoom(u); // Pass only the user information
+    updateChatRoom(u);
   };
 
   useEffect(() => {
@@ -59,19 +58,16 @@ export default function Chatitem() {
               onClick={() => handleSelect(chat[1].userInfo)}
             >
               <div className=" ">
-                <a
-                  href="#"
-                  className="btn btn-ghost w-full flex  normal-case p-2 h-full justify-between items-center "
-                >
+                <button className="btn btn-ghost w-full flex  normal-case p-2 h-full justify-between items-center ">
                   <div className=" h-full rounded-full py-2 overflow-hidden ">
                     <Image
                       src={chat[1].userInfo.photoURL}
                       alt="user"
                       blurDataURL="data:..."
-                      automatically
-                      provided
+                      automatically={"true"}
+                      provided={"true"}
                       placeholder="blur"
-                      className=" w-full h-full object-cover " // Optional blur-up while loading
+                      className=" w-full h-full object-cover "
                       width={45}
                       height={45}
                     />
@@ -87,7 +83,7 @@ export default function Chatitem() {
                   <div className="f  text-xs font-light">
                     <p>9:36pm</p>
                   </div>
-                </a>
+                </button>
               </div>
             </div>
           ))}

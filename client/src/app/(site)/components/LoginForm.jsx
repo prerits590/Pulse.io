@@ -1,83 +1,108 @@
-// Update your loginForm component
-"use client"
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
+
+import { ref } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation.js";
-import { useGlobalContext } from "../../../Context/store";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useGlobalContext } from "../../../Context/store";
+import { auth, db } from "../../../libs/firebase";
 
 const initialState = {
+  fullName: "",
   email: "",
   password: "",
+  image: null,
 };
 
-export default function LoginForm() {
+export default function loginForm() {
   const [credentials, setCredentials] = useState(initialState);
-  const { setCurrentUser } = useGlobalContext();
-  const [message, setMessage] = useState("Error while logging in.");
+  const { currentUser, setCurrentUser } = useGlobalContext();
+  const [message, setMessage] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
 
+  const addUser = async (credentials) => {
+    const docRef = await addDoc(collection(db, "users"), {
+      email: credentials.email,
+      password: credentials.password,
+    });
+    console.log("docRef", docRef);
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let name;
+    let value;
+    if (e.target.files) {
+      name = e.target.name;
+      value = e.target.files[0].name;
+    } else {
+      name = e.target.name;
+      value = e.target.value;
+    }
+    console.log(name, value);
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
+      await signInWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          setLoggedIn(true);
+          setMessage("Login Successful!");
 
-      if (response.ok) {
-        const userData = await response.json();
-        setLoggedIn(true);
-        setMessage("Login Successful!");
-        setCurrentUser(userData.user); // Update your global context with the user data
-        router.push("/chat");
-      } else {
-        const errorData = await response.json();
-        console.error("Login error:", errorData.error);
-        setMessage("Error while logging in.");
-      }
+          router.push("/dashboard");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          setMessage(errorMessage);
+          // ..
+        });
     } catch (error) {
-      console.error("Login error:", error.message);
-      setMessage("Error while logging in.");
+      console.error(error);
     } finally {
       setCredentials(initialState);
     }
   };
 
-  const alert = (message, loggedIn) => {
-    return (
-      <div
-        role="alert"
-        className={`alert ${loggedIn ? "alert-success" : "alert-error"}`}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="stroke-current shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
+  const alert = () => {
+    if (loggedIn == true || message) {
+      return (
+        <div
+          role="alert"
+          className={`alert ${loggedIn ? "alert-success" : "alert-error"}`}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>{message}</span>
-      </div>
-    );
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{message}</span>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -94,7 +119,7 @@ export default function LoginForm() {
         <div className="w-full">
           <label className="w-full">
             <input
-              className="input w-full mb-2"
+              className="input w-full mb-2 "
               type="email"
               name="email"
               placeholder="Email"
@@ -105,7 +130,7 @@ export default function LoginForm() {
 
           <label className="w-full">
             <input
-              className="input w-full mb-2"
+              className="input w-full mb-2 "
               type="password"
               name="password"
               placeholder="Password"
@@ -120,10 +145,9 @@ export default function LoginForm() {
           className="submit btn btn-primary w-full"
         >
           Submit
-          {/* <Link href="/chat">Submit</Link> */}
         </button>
       </form>
-      {alert(message)}
+      <div className="alert-div px-2">{alert(message)}</div>
     </div>
   );
 }

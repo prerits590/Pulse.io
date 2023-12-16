@@ -13,15 +13,14 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../libs/firebase";
 import Image from "next/image";
-import { GlobalContext } from "../../Context/store";
+
+import { GlobalContext } from "../../../../Context/store";
+import { db } from "../../../../libs/firebase";
 export default function ChatsSection() {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
-
-  const { currentUser } = useContext(GlobalContext);
 
   const handleSearch = async () => {
     const q = query(
@@ -59,12 +58,13 @@ export default function ChatsSection() {
       if (!res.exists()) {
         // The document doesn't exist, so create a new one
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
-        // Create user chats
+        //  Create user chats
         const docCheck = await getDoc(doc(db, "userChats", currentUser.uid));
         if (!docCheck.exists()) {
-          console.log("FALSE");
+          console.log("FALSE---->>>>>");
+          await setDoc(doc(db, "userChats", currentUser.uid), {});
+          await setDoc(doc(db, "userChats", user.uid), {});
         }
-        await setDoc(doc(db, "userChats", currentUser.uid), {});
 
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
@@ -87,11 +87,11 @@ export default function ChatsSection() {
     } catch (err) {
       console.error("Error checking or creating chat document:", err);
     }
-    // setUser(null);
+    setUser(null);
     setUsername("");
   };
   return (
-    <div>
+    <div className="">
       <div className="c flex justify-between p-3 items-center ">
         <div className="a font-extrabold btn normal-case btn-outline btn-accent">
           <h1>Chats</h1>
@@ -137,11 +137,11 @@ export default function ChatsSection() {
                         src={user.photoURL}
                         alt="bg-hover"
                         blurDataURL="data:..."
-                        provided
+                        provided={"true"}
                         placeholder="blur"
                         className="rounded-full w-auto h-auto"
                         width={45}
-                        height={45} // Optional blur-up while loading
+                        height={45}
                       />
                     </div>
                     <div className="c justify-center items-center text-left ">

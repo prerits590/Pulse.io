@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import { GlobalContext, GlobalContextProvider } from "../Context/store";
 
-import "./globals.css";
 import { Inter } from "next/font/google";
-import { ChatContextProvider } from "../Context/ChatContext";
+import { GlobalContextProvider } from "../../Context/store";
+import { ChatContextProvider } from "../../Context/ChatContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

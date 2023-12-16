@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import { auth } from "../../../../libs/firebase";
 import { useRouter } from "next/navigation";
+import { auth } from "../../../../libs/firebase";
 
 const withAuth = (WrappedComponent) => {
   const Wrapper = (props) => {

@@ -24,9 +24,7 @@ export const GlobalContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log("Triggered !!!!!!!!!");
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("here------>>>>", user);
       setCurrentUser(user);
     });
 

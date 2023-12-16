@@ -1,43 +1,45 @@
+"use client";
 import React, { useContext } from "react";
-import { BiAlarm, BiUserCircle } from "react-icons/bi";
-import { IoIosNotifications } from "react-icons/io";
-import ChatBubbleL from "../components/ChatBubbleL";
-import ChatBubbleR from "../components/ChatBubbleR";
-import ChatBox from "../components/ChatBox";
-import Ellipse2 from "../../../public/images/Ellipse2.png";
 import Image from "next/image";
 import { IoCallOutline } from "react-icons/io5";
-import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 import { BsCameraVideo } from "react-icons/bs";
 import { IoIosPower } from "react-icons/io";
 import { signOut } from "firebase/auth";
-import { auth } from "../../libs/firebase";
-import { GlobalContext } from "../../Context/store";
-import { ChatContext } from "../../Context/ChatContext";
-import Messages from "./Messages";
 
-import userPng from "../../../public/images/userPng.png";
+import userPng from "../../../../../public/images/userPng.png";
+import { auth } from "../../../../libs/firebase";
+import { GlobalContext } from "../../../../Context/store";
+import { ChatContext } from "../../../../Context/ChatContext";
+import Messages from "../components/Messages";
+import ChatBox from "../components/ChatBox";
+import MobileTab from "./MobileTab";
 
-export default function ChatS() {
+export default function MobChatS() {
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(GlobalContext);
   return (
     <div>
-      <div className="a rounded-lg flex p-1 items-center ">
+      <div className="a rounded-lg flex p-1 items-center fixed glass-bg-2">
         <div className=" h-full flex justify-center items-center px-3">
-          <a href="/" className="btn btn-ghost h-full normal-case ">
-            <div className="a flex items-center py-2">
+          <div className="py-1 h-full normal-case flex items-center">
+            <div className=" px-2 ">
+              <div className="absolute h-full  top-0 left-0">
+                <MobileTab />
+              </div>
+            </div>
+            <div className="a flex items-center py-2 px-6">
               <div className="b text-3xl border-2 h-full rounded-full overflow-hidden">
                 <Image
                   src={data.user?.photoURL || userPng}
                   alt="bg-hover"
                   blurDataURL="data:..."
-                  automatically
-                  provided
+                  automatically={"true"}
+                  provided={"true"}
                   placeholder="blur"
                   className="a "
                   width={40}
-                  height={40} // Optional blur-up while loading
+                  height={40}
                 />
               </div>
               <div className="text-xs px-2 text-left font-medium">
@@ -46,7 +48,7 @@ export default function ChatS() {
                 </div>
               </div>
             </div>
-          </a>
+          </div>
 
           <div className="flex justify-end text-2xl px-2">
             <a className="e px-4 btn btn-ghost">
@@ -66,12 +68,11 @@ export default function ChatS() {
         </div>
       </div>
       <div className="divider m-0 py-0 px-6 h-0"></div>
-      <div>
-        <Messages />
-      </div>
-
-      <div className="a bottom-0 ">
-        <div className="a absolute bottom-0 p-2 w-full">
+      <div className=" ">
+        <div className="">
+          <Messages />
+        </div>
+        <div className="a absolute bottom-0 p-2 w-full glass-bg-2">
           <ChatBox />
         </div>
       </div>
