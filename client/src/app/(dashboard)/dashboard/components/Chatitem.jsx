@@ -64,8 +64,8 @@ export default function Chatitem() {
                       src={chat[1].userInfo.photoURL}
                       alt="user"
                       blurDataURL="data:..."
-                      automatically
-                      provided
+                      automatically={"true"}
+                      provided={"true"}
                       placeholder="blur"
                       className=" w-full h-full object-cover "
                       width={45}

@@ -13,17 +13,17 @@ export default function () {
     setIsTabOpen(false);
   };
   return (
-    <div className="glass-bg-2">
-      <div className=" ">
-        <div>
-          <button onClick={openTab} className="btn btn-ghost">
+    <div className="">
+      <div className=" h-full ">
+        <div className=" py-3 ">
+          <button onClick={openTab} className="btn btn-ghost  glass-bg-2">
             <CiMenuFries />
           </button>
         </div>
         {isTabOpen && (
           <div>
-            <div className="h-screen">
-              <button onClick={closeTab} className="btn btn-ghost">
+            <div className="h-screen glass-bg-2">
+              <button onClick={closeTab} className="btn btn-ghost glass-bg-2">
                 <IoMdClose />
               </button>
               <ChatsSection />

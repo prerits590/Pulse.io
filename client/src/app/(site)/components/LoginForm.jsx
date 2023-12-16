@@ -51,18 +51,6 @@ export default function loginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const userCredential = await signInWithEmailAndPassword(
-      //   auth,
-      //   credentials.email,
-      //   credentials.password
-      // );
-
-      // const user = userCredential.user;
-      // router.push("/chat");
-      // setCurrentUser(user);
-      // console.log(user);
-      // console.log("from credssss", user);
-
       await signInWithEmailAndPassword(
         auth,
         credentials.email,
@@ -73,10 +61,8 @@ export default function loginForm() {
           const user = userCredential.user;
           setLoggedIn(true);
           setMessage("Login Successful!");
-          // console.log(user);
-          // console.log("first------->>>>>>>>>", setLoggedIn);
+
           router.push("/dashboard");
-          // ...
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -88,20 +74,11 @@ export default function loginForm() {
     } catch (error) {
       console.error(error);
     } finally {
-      // console.log("Credential", credentials);
       setCredentials(initialState);
-      // console.log("------>>>>>>", currentUser);
     }
-
-    // if (currentUser) {
-    // }
-    // console.log("------>>>>>>", currentUser);
-    // router.push("/chat");
   };
-  // console.log(setLoggedIn)
+
   const alert = () => {
-    console.log(message);
-    console.log(loggedIn);
     if (loggedIn == true || message) {
       return (
         <div

@@ -59,8 +59,8 @@ export default function Sidebar() {
                   src={currentUser?.photoURL || userPng}
                   alt="img"
                   blurDataURL="data:..."
-                  automatically
-                  provided
+                  automatically={"true"}
+                  provided={"true"}
                   placeholder="blur"
                   className="w-full  object-cover" // Optional blur-up while loading
                   width={45}

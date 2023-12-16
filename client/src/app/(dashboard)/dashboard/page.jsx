@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import ResponsiveComponent from "./components/ResponsiveComponent";
+import withAuth from "./components/WithAuth";
 
 function page() {
   return (
@@ -9,4 +11,4 @@ function page() {
   );
 }
 
-export default page;
+export default withAuth(page);

@@ -28,8 +28,8 @@ export default function ChatS() {
                   src={data.user?.photoURL || userPng}
                   alt="bg-hover"
                   blurDataURL="data:..."
-                  automatically
-                  provided
+                  automatically={"true"}
+                  provided={"true"}
                   placeholder="blur"
                   className="a "
                   width={40}

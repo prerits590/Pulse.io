@@ -137,7 +137,7 @@ export default function ChatsSection() {
                         src={user.photoURL}
                         alt="bg-hover"
                         blurDataURL="data:..."
-                        provided
+                        provided={"true"}
                         placeholder="blur"
                         className="rounded-full w-auto h-auto"
                         width={45}

@@ -23,8 +23,8 @@ export default function MobChatS() {
       <div className="a rounded-lg flex p-1 items-center fixed glass-bg-2">
         <div className=" h-full flex justify-center items-center px-3">
           <div className="py-1 h-full normal-case flex items-center">
-            <div className="border px-2">
-              <div className="absolute top-0 left-0">
+            <div className=" px-2 ">
+              <div className="absolute h-full  top-0 left-0">
                 <MobileTab />
               </div>
             </div>
@@ -34,8 +34,8 @@ export default function MobChatS() {
                   src={data.user?.photoURL || userPng}
                   alt="bg-hover"
                   blurDataURL="data:..."
-                  automatically
-                  provided
+                  automatically={"true"}
+                  provided={"true"}
                   placeholder="blur"
                   className="a "
                   width={40}

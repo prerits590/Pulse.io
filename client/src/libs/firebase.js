@@ -70,7 +70,6 @@ export const handleSelectChat = async () => {
       // Create user chats
       const docCheck = await getDoc(doc(db, "userChats", currentUser.uid));
       if (!docCheck.exists()) {
-        console.log("FALSE---->>>>>");
         await setDoc(doc(db, "userChats", currentUser.uid), {});
         await setDoc(doc(db, "userChats", user.uid), {});
       }

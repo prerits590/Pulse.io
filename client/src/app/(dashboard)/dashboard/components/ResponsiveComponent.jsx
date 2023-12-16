@@ -19,7 +19,7 @@ function ResponsiveComponent() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  return <div>{windowWidth > 768 ? <StandardView /> : <MobileView />}</div>;
+  return <div>{windowWidth > 550 ? <StandardView /> : <MobileView />}</div>;
 }
 
 export default ResponsiveComponent;
