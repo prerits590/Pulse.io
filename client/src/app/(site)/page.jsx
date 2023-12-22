@@ -37,7 +37,7 @@ export default function RootPage() {
               automatically={"true"}
               provided={"true"}
               placeholder="blur"
-              className="float" // Optional blur-up while loading
+              className="float"
             />
           </div>
           <div className="grid grid-cols-8 gap-1 justify-center items-center hero-section p-8 w-full h-full overflow-y-hidden overflow-x-hidden">
