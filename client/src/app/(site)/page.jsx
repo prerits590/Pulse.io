@@ -5,6 +5,7 @@ import Image from "next/image";
 import ssshape from "../../../public/images/ssshape.svg";
 import Link from "next/link";
 import { useState } from "react";
+import Typewriter from "typewriter-effect";
 
 export default function RootPage() {
   const [showLogin, setShowLogin] = useState(<SignupForm />);
@@ -42,14 +43,45 @@ export default function RootPage() {
           <div className="grid grid-cols-8 gap-1 justify-center items-center hero-section p-8 w-full h-full overflow-y-hidden overflow-x-hidden">
             <div className=" flex justify-start col-span-8 md:col-span-5 p-2">
               <div className=" px-4 h-min flex justify-center">
-                <article className="prose md:prose-xl">
-                  <div className=" w-min h-min ">
-                    <h1 className="gradient-text2 m-2">Lorem</h1>
+                <div className="flex flex-wrap">
+                  <div
+                    style={{
+                      fontSize: "50px",
+                      fontWeight: "800",
+                      background:
+                        " linear-gradient(to right, #009fff, #ec2f4b)",
+                      backgroundClip: "text",
+                      WebkitBackgroundClip: "text",
+                      color: "transparent",
+                    }}
+                  >
+                    Welcome to
                   </div>
-                  <div className=" w-min truncate h-min">
-                    <h1 className="gradient-text1 m-2">Lorem ipsum dolor.</h1>
+                  <div
+                    className="px-2"
+                    style={{
+                      fontSize: "50px",
+                      fontWeight: "800",
+                      background:
+                        " linear-gradient(to left, #009fff, #ec2f4b)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    <Typewriter
+                      options={{
+                        strings: [
+                          "Private,",
+                          "Powerful,",
+                          "Personalized,",
+                          "Pulse.io...",
+                        ],
+                        autoStart: true,
+                        loop: true,
+                      }}
+                    />
                   </div>
-                </article>
+                </div>
               </div>
             </div>
             <div className=" flex justify-center items-center col-span-8 md:col-span-3">
