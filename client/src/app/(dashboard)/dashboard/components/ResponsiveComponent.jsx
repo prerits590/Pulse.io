@@ -4,7 +4,9 @@ import StandardView from "./StandardView";
 import MobileView from "../mobileView/MobileView";
 
 function ResponsiveComponent() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
 
   useEffect(() => {
     const handleResize = () => {
