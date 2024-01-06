@@ -8,7 +8,7 @@ import { useState } from "react";
 import Typewriter from "typewriter-effect";
 
 export default function RootPage() {
-  const [showLogin, setShowLogin] = useState(<SignupForm />);
+  const [showLogin, setShowLogin] = useState(true);
   const toggleForm = () => {
     setShowLogin((prev) => !prev);
   };
@@ -20,7 +20,7 @@ export default function RootPage() {
           <div className="navbar p-2 ">
             <div className="flex justify-between">
               <Link href="/" className="btn btn-ghost normal-case text-xl">
-                <span className="gradient-text1 font-extrabold">Pulse.io</span>
+                <span className="gradient-text-2 font-extrabold">Pulse.io</span>
               </Link>
             </div>
             <button className="btn btn-outline" onClick={toggleForm}>
@@ -42,38 +42,18 @@ export default function RootPage() {
           </div>
           <div className="grid grid-cols-8 gap-1 justify-center items-center hero-section p-8 w-full h-full overflow-y-hidden overflow-x-hidden">
             <div className=" flex justify-start col-span-8 md:col-span-5 p-2">
-              <div className=" px-4 h-min flex justify-center">
-                <div className="flex flex-wrap">
-                  <div
-                    style={{
-                      fontSize: "50px",
-                      fontWeight: "800",
-                      background:
-                        " linear-gradient(to right, #009fff, #ec2f4b)",
-                      backgroundClip: "text",
-                      WebkitBackgroundClip: "text",
-                      color: "transparent",
-                    }}
-                  >
+              <div className=" px-4 h-min flex justify-start  ">
+                <div className="  text-5xl font-extrabold grid grid-cols-2 gap-1 ">
+                  <div className="gradient-text-1 md:col-span-1 col-span-2 ">
                     Welcome to
                   </div>
-                  <div
-                    className="px-2"
-                    style={{
-                      fontSize: "50px",
-                      fontWeight: "800",
-                      background:
-                        " linear-gradient(to left, #009fff, #ec2f4b)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  >
+                  <div className="px-1 gradient-text-2 md:col-span-1 col-span-2 ">
                     <Typewriter
                       options={{
                         strings: [
                           "Private,",
                           "Powerful,",
-                          "Personalized,",
+                          "Personal,",
                           "Pulse.io...",
                         ],
                         autoStart: true,
