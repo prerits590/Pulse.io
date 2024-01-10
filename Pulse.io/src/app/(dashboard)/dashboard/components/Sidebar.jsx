@@ -16,7 +16,7 @@ export default function Sidebar() {
     <div className="h-screen p-0 flex justify-between flex-col">
       <div className=" flex flex-col content-center items-center p-2 font-extrabold text-xl">
         <div className="a my-1 p-2 btn btn-ghost ">
-          <span className="gradient-text-2 font-extrabold lg:text-lg text-sm p-4 w-full ">
+          <span className="gradient-text-2 font-extrabold lg:text-lg text-sm p-1 w-full ">
             Pulse.io
           </span>
         </div>

@@ -29,7 +29,7 @@ export const GlobalContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  console.log("INSIDE-CONTEXT", currentUser);
+  // console.log("INSIDE-CONTEXT", currentUser);
 
   return (
     <GlobalContext.Provider value={{ currentUser, setCurrentUser }}>

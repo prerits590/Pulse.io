@@ -21,7 +21,7 @@ export default function ChatBox() {
 
   const { currentUser } = useContext(GlobalContext);
   const { data } = useContext(ChatContext);
-
+  console.log(data.chatId,"---->>>????");
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuidv4());

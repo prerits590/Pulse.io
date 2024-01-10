@@ -5,10 +5,10 @@ import { GlobalContext } from "../../../../Context/store";
 export default function Message(message) {
   const { currentUser } = useContext(GlobalContext);
   // const { data } = useContext(ChatContext);
-  const ref = useRef();
-  useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
+  // const ref = useRef();
+  // useEffect(() => {
+  //   ref.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [message]);
 
   const [chatFlag, setChatFlag] = useState(false);
 

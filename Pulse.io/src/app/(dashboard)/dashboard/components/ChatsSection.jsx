@@ -15,11 +15,13 @@ import {
 import Image from "next/image";
 
 import { db } from "../../../../libs/firebase";
+import { GlobalContext } from "../../../../Context/store";
 export default function ChatsSection() {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
-
+  const { currentUser } = useContext(GlobalContext);
+  console.log(currentUser.displayName);
   const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
@@ -42,7 +44,6 @@ export default function ChatsSection() {
     e.code === "Enter" && handleSearch();
   };
   const handleSelect = async () => {
-    // check if group exists or not, if not create new
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
@@ -52,7 +53,7 @@ export default function ChatsSection() {
 
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
-
+      console.log(combinedId);
       if (!res.exists()) {
         // The document doesn't exist, so create a new one
         await setDoc(doc(db, "chats", combinedId), { messages: [] });

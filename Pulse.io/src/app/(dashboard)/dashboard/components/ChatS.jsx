@@ -13,10 +13,16 @@ import { GlobalContext } from "../../../../Context/store";
 import { ChatContext } from "../../../../Context/ChatContext";
 import Messages from "./Messages";
 import ChatBox from "./ChatBox";
+import { useRouter } from "next/navigation.js";
 
 export default function ChatS() {
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(GlobalContext);
+  const router = useRouter();
+  const handleSignout = (e) => {
+    signOut(auth);
+    router.push("/");
+  };
   return (
     <div>
       <div className="a rounded-lg flex p-1 items-center fixed glass-bg-2">
@@ -55,7 +61,7 @@ export default function ChatS() {
               <AiOutlineSearch />
             </a>
             <a className="divider divider-horizontal p-0 m-0"></a>
-            <a onClick={() => signOut(auth)} className="px-4 btn btn-ghost">
+            <a onClick={handleSignout} className="px-4 btn btn-ghost">
               <IoIosPower />
             </a>
           </div>
