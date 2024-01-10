@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
-import { BiUser } from "react-icons/bi";
 import { doc, onSnapshot } from "firebase/firestore";
 import { GlobalContext } from "../../../../Context/store";
 import { ChatContext } from "../../../../Context/ChatContext";
@@ -57,9 +56,9 @@ export default function Chatitem() {
               key={chat[0]}
               onClick={() => handleSelect(chat[1].userInfo)}
             >
-              <div className=" ">
+              <div className=" border rounded-lg glass-bg my-2">
                 <button className="btn btn-ghost w-full flex  normal-case p-2 h-full justify-between items-center ">
-                  <div className=" h-full rounded-full py-2 overflow-hidden ">
+                  <div className=" h-full rounded-full py-2 overflow-hidden border-2">
                     <Image
                       src={chat[1].userInfo.photoURL}
                       alt="user"

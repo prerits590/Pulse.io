@@ -5,14 +5,11 @@ import {
   useEffect,
   useState,
   useContext,
-  Dispatch,
-  SetStateAction,
 } from "react";
 import { auth } from "../libs/firebase";
 
 export const GlobalContext = createContext({
   currentUser: null,
-  currentUser: () => {},
 });
 
 export const GlobalContextProvider = ({ children }) => {
@@ -32,9 +29,8 @@ export const GlobalContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  console.log("INSIDE-CONTEXT", currentUser);
+  // console.log("INSIDE-CONTEXT", currentUser);
 
-  // Return the JSX element
   return (
     <GlobalContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}
